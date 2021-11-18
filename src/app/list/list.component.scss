@@ -1,0 +1,40 @@
+h1 {
+  position: absolute;
+  top: 25px;
+}
+
+.results-container {
+  position: relative;
+  top: 20px;
+  width: 85%;
+}
+
+.list-table {
+  width: 100%;
+}
+
+th {
+  font-size: 1.3rem;
+  font-weight: 900;
+  text-decoration: underline;
+}
+
+td {
+  font-size: 1rem;
+  border-bottom: 1px solid black;
+}
+
+.title {
+  width: 20%;
+  text-align: center;
+}
+
+.date {
+  text-align: center;
+  width: 10%;
+}
+
+.overview {
+  width: 70%;
+  text-align: center;
+}

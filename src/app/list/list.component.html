@@ -1,0 +1,18 @@
+<div class="results-container">
+  <table class="list-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Release Date</th>
+        <th>Overview</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let movie of movies">
+      <tr class="data">
+        <td class="title">{{ movie.title }}</td>
+        <td class="date">{{ movie.release_date }}</td>
+        <td class="overview">{{ movie.overview }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

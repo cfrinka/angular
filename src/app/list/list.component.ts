@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { MoviesService } from '../movies.service';
 
 @Component({
@@ -6,16 +7,24 @@ import { MoviesService } from '../movies.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
-  movies: any = [];
+export class ListComponent implements OnInit, OnDestroy {
+  private destroyed$ = new Subject<void>();
+  static moviesFromSearch: any = [];
+
+  movies: any;
 
   constructor(private moviesService: MoviesService) {}
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+  }
 
   ngOnInit(): void {
-    this.moviesService.listMovies().subscribe((movies: any) => {
-      this.movies = movies.results;
-      this.moviesService.movieList = this.movies;
-      console.log('list', this.movies);
-    });
+    this.moviesService
+      .listMovies()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((movies) => {
+        console.log('movies on init', movies);
+        this.movies = movies;
+      });
   }
 }

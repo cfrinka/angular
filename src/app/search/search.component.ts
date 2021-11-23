@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ListComponent } from '../list/list.component';
 import { MoviesService } from '../movies.service';
 
 @Component({
@@ -17,7 +18,6 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {}
   addChip(chipText: string): void {
     this.chips.push(chipText);
-    this.moviesService.chipsArray.push(chipText);
     this.chipText = '';
   }
   removeChip(chipText: string) {
@@ -29,10 +29,18 @@ export class SearchComponent implements OnInit {
     }
   }
   searchMovies() {
-    console.log('search called');
-    this.moviesService.listMovies().subscribe((movies: any) => {
-      this.movies = movies.results;
-      this.moviesService.movieList = this.movies;
-    });
+    // console.log('search works');
+    // console.log('chips in search component', this.chips);
+    this.moviesService.chipsArray = this.chips;
+    // console.log('chips array in service', this.moviesService.chipsArray);
+    if (this.moviesService.chipsArray.length > 0) {
+      // console.log('initiated list', this.moviesService.chipsArray);
+      this.moviesService.listMovies().subscribe((movies: any) => {
+        // console.log('inside subcription', this.movies);
+        this.movies = movies.results;
+        ListComponent.moviesFromSearch = this.movies;
+        // console.log('should show only .results', this.movies);
+      });
+    }
   }
 }
